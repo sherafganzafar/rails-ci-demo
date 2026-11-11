@@ -5,7 +5,7 @@ pipeline {
 
   stages {
     stage('Install gems') {
-      steps { sh 'bundle install --quiet' }
+      steps { retry(5) { sh 'bundle install --quiet --retry 5' } }
     }
     stage('Lint') {
       steps { sh 'bundle exec rubocop' }

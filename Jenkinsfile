@@ -15,7 +15,7 @@ pipeline {
   stages {
     stage('Install gems (cached)') {
       agent { docker { image 'ruby:3.3'; args '-v gem-cache:/usr/local/bundle' } }
-      steps { sh 'bundle install --jobs 4 --quiet' }
+      steps { retry(5) { sh 'bundle install --jobs 4 --quiet --retry 5' } }
     }
 
     stage('Checks') {
